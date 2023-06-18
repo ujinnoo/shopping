@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>럭키 마트</title>
+    <script src="js/xscroll.js"></script>
+    <style>
+        html {
+            width: 4000px;
+            overflow-x: hidden;
+            /* scroll-behavior: smooth; */
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        /* body {
+            background-image: url(img/Shopping.png);
+            background-repeat: no-repeat;
+        } */
+
+        #logo {
+            position: fixed;
+            margin: 30px 0 0 50px;
+            display: inline-block;
+        }
+
+        #logo img {
+            width: 40px;
+        }
+
+        #cart {
+            z-index: 1;
+            position: fixed;
+            left: -300px;
+            top: 550px;
+            transition: left 2s ease-in-out;
+        }
+
+        #cart img {
+            width: 200px;
+        }
+
+        header ul {
+            position: fixed;
+            display: inline-block;
+            margin: 3% 0 0 78%;
+        }
+
+        header li {
+            display: inline-block;
+            list-style-type: none;
+            padding: 0 10px;
+        }
+
+        
+        header li a {
+            text-decoration: none;
+            color: black;
+        }
+
+        header li a:hover {
+            color: red;
+            cursor: pointer;
+        }
+
+        #ground {
+            position: fixed;
+            background-color: #d7d7d7;
+            bottom: 0;
+            width: 100%;
+            height: 300px;
+            z-index: 0;
+        }
+
+        #talk {
+            position: fixed;
+            top: 50px;
+            left: 37%;
+            background: rgba(229, 229, 229, 0.5);
+            border-radius: 20px;
+            width: 400px;
+            height: 100px;
+            visibility: hidden;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+            cursor: pointer;
+        }
+
+        #talk.fade-in {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+
+        #profile {
+            margin-top: 17px;
+            margin-left: 30px;
+            border-radius: 100%;
+        }
+
+        #kt {
+            position: absolute;
+            top: 60px;
+            left: 80px;
+        }
+
+        #talk h3 {
+            position: absolute;
+            display: inline-block;
+            margin: 30px 0 0 30px;
+        }
+
+        #menu2 {
+            position: fixed;
+            top: 88%;
+            left: 4%;
+        }
+
+        #menu2 img {
+            width: 40px;
+            padding: 0 10px;
+        }
+
+        #phoneicon:hover {
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        #newsicon:hover {
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        #phone {
+            position: fixed;
+            right: -500px;
+            top: 10%;
+            transition: right 0.5s ease-in-out;
+        }
+
+        #phone.show {
+            right: 5%;
+            transition: right 0.5s ease-in-out;
+        }
+
+        #phone img {
+            width: 300px;
+        }
+        #checklist {
+            position: absolute;
+            top: 180px;
+            line-height: 1.5;
+            left: 25%;
+            list-style-type: none;
+            text-align: left;
+        }
+
+        #phone h2 {
+            position: absolute;
+            top: 130px;
+            left: 25%;
+        }
+
+        #mission {
+            position: fixed;
+            right: 3%;
+            bottom: 5%;
+        }
+
+        #tomato {
+            position: absolute;
+            margin-top: 300px;
+            margin-left: 500px;
+        }
+
+        #tomato2 {
+            background-color: #ffadad;
+            border: solid 1px black;
+            position: absolute;
+            margin-top: 300px;
+            margin-left: 630px;
+            display: none;
+            line-height: 2;
+            padding: 10px;
+        }
+
+        #strawberry {
+            position: absolute;
+            margin-top: 500px;
+            margin-left: 800px;
+        }
+
+        #strawberry2 {
+            background-color: #ffadff;
+            border: solid 1px black;
+            position: absolute;
+            margin-top: 500px;
+            margin-left: 930px;
+            display: none;
+            line-height: 2;
+            padding: 10px;
+        }
+
+        #milk {
+            position: absolute;
+            margin-top: 250px;
+            margin-left: 1300px;
+        }
+
+        #milk2 {
+            background-color: #fcffe8;
+            border: solid 1px black;
+            position: absolute;
+            margin-top: 250px;
+            margin-left: 1430px;
+            display: none;
+            line-height: 2;
+            padding: 10px;
+        }
+
+        #chicken {
+            position: absolute;
+            margin-top: 450px;
+            margin-left: 1600px;
+        }
+
+        #chicken2 {
+            position: absolute;
+            margin-top: 450px;
+            margin-left: 1700px;
+        }
+
+        #chicken3 {
+            width: max-content;
+            background-color: #d5ffd0;
+            border: solid 1px black;
+            position: absolute;
+            margin-top: 450px;
+            margin-left: 1880px;
+            display: none;
+            line-height: 2;
+            padding: 10px;
+        }
+
+        #cereal {
+            position: absolute;
+            margin-top: 250px;
+            margin-left: 2000px;
+        }
+
+        #cereal2 {
+            width: max-content;
+            background-color: #d0fffa;
+            border: solid 1px black;
+            position: absolute;
+            margin-top: 250px;
+            margin-left: 2200px;
+            display: none;
+            line-height: 2;
+            padding: 10px;
+        }
+
+        #cream {
+            position: absolute;
+            margin-top: 500px;
+            margin-left: 2700px;
+        }
+
+        #cream2 {
+            width: max-content;
+            background-color: #dbd0ff;
+            border: solid 1px black;
+            position: absolute;
+            margin-top: 500px;
+            margin-left: 2800px;
+            display: none;
+            line-height: 2;
+            padding: 10px;
+        }
+
+        /* #cereal {
+            position: absolute;
+            margin-top: 250px;
+            margin-left: 2000px;
+        }
+
+        #cereal2 {
+            width: max-content;
+            background-color: #d0fffa;
+            border: solid 1px black;
+            position: absolute;
+            margin-top: 250px;
+            margin-left: 2200px;
+            display: none;
+            line-height: 2;
+            padding: 10px;
+        }
+
+        #cereal {
+            position: absolute;
+            margin-top: 250px;
+            margin-left: 2000px;
+        }
+
+        #cereal2 {
+            width: max-content;
+            background-color: #d0fffa;
+            border: solid 1px black;
+            position: absolute;
+            margin-top: 250px;
+            margin-left: 2200px;
+            display: none;
+            line-height: 2;
+            padding: 10px;
+        } */
+    </style>
+</head>
+<body>
+    <header>
+        <div id="logo"><a href="index.html"><img src="./img/logo.png" alt=""></a></div>
+        <ul>
+            <li><a href="shopping.html" style="color: red;">장보기</a></li>
+            <li><a href="basket.html">장바구니</a></li>
+            <li><a href="game.html">하늘에서 음식이 내린다면</a></li>
+        </ul>
+    </header>
+    <div id="cart">
+        <img src="img/cart.png">
+    </div>
+    <div id="ground"></div>
+    <img src="" alt="">
+
+    <div id="talk">
+        <img id="profile" src="./img/calm.jpeg" alt="" width="70px">
+        <img id="kt" src="./img/ktalk.png" alt="" width="30px">
+        <h3>언닝<br><small>올 때 메로나</small></h3>
+    </div>
+
+    <div id="menu2">
+        <img id="phoneicon2" src="./img/phoneicon2.png" alt="">
+        <a href="newspaper.html"><img id="newsicon" src="./img/newsicon2.png" alt=""></a>
+    </div>
+    
+    <div id="menu2">
+        <img id="phoneicon" src="./img/phoneicon.png" alt="">
+        <a href="newspaper.html"><img id="newsicon" src="./img/newsicon.png" alt=""></a>
+    </div>
+    
+
+    <div id="phone">
+        <img src="img/phone.png" alt="">
+            <h2>장 볼 것</h2>
+            <ul id="checklist">
+                <li><input type="checkbox" name="" id=""> 닭</li>
+                <li><input type="checkbox" name="" id=""> 대파</li>
+                <li><input type="checkbox" name="" id=""> 딸기</li>
+                <li><input type="checkbox" name="" id=""> 생크림</li>
+                <li><input type="checkbox" name="" id=""> 토마토</li>
+                <li><input type="checkbox" name="" id=""> 초코파이</li>
+            </ul>
+    </div>
+
+    <img id="tomato" src="./img/tomato.png" alt="" width="80px" onmouseover="show1()" onmouseout="hide1()">
+    <div id="tomato2">토마토<br>가격 1,000원<br><small>나는 토마토가 정말 싫다 패스하자</small></div>
+
+    <img id="strawberry" src="./img/strawberrry.png" alt="" width="120px" onmouseover="show2()" onmouseout="hide2()">
+    <div id="strawberry2">딸기<br>가격 5,990원<br><small>딸기 타르트 주재료!</small></div>
+
+    <img id="milk" src="./img/milk2.png" alt="" width="100px" onmouseover="show3()" onmouseout="hide3()">
+    <div id="milk2">우유<br>가격 3,000원<br><small>내가 제일 좋아하는 우유이다. 사갈까?</small></div>
+
+    <img id="chicken" src="./img/chicken.png" alt="" width="150px" onmouseover="show4()" onmouseout="hide4()">
+    <img id="chicken2" src="./img/chicken2.png" alt="" width="150px" onmouseover="show4()" onmouseout="hide4()">
+    <div id="chicken3">하림 닭<br>가격 7,000원<br><small>닭 봉, 윙 부위이다</small></div>
+
+    <img id="cereal" src="./img/cereal.png" alt="" width="200px" onmouseover="show5()" onmouseout="hide5()">
+    <div id="cereal2">시리얼<br>가격 4,000원<br><small>많이 안달아서 맛있는 시리얼</small></div>
+
+    <img id="cream" src="./img/cream2.png" alt="" width="100px" onmouseover="show6()" onmouseout="hide6()">
+    <div id="cream2">생크림<br>가격 5,000원<br><small>생크림 가격이 많이 올랐네...</small></div>
+
+    <!-- <img id="pie" src="./img/chocopie.png" alt="" width="150px" onmouseover="show5()" onmouseout="hide5()">
+    <div id="pie2">시리얼<br>가격 4,000원<br><small>많이 안달아서 맛있는 시리얼</small></div>
+
+    <img id="gonion" src="./img/greenonion2.png" alt="" width="200px" onmouseover="show5()" onmouseout="hide5()">
+    <div id="goinon2">시리얼<br>가격 4,000원<br><small>많이 안달아서 맛있는 시리얼</small></div> -->
+
+
+    <div id="mission">
+        <form name="form2">
+            Mission <INPUT TYPE=BUTTON VALUE="Start" onclick="ticker();"><br>
+            <input type="text" name="ticker_tape" size="75">
+        </form>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var audio = new Audio("./sounds/click.mp3");
+            audio.play();
+            var audio2 = new Audio("./sounds/falling.mp3");
+            audio2.play();
+            audio2.volume = 0.1;
+            audio2.loop = true;
+            var cart = document.getElementById("cart");
+            var originalLeft = -300;
+            var finalLeft = 100;
+
+            cart.style.left = originalLeft + "px";
+
+            // setTimeout을 사용하여 원래 위치로 이동하는 애니메이션 효과를 부여
+            setTimeout(function() {
+                cart.style.left = finalLeft + "px";
+            }, 100);
+        });
+
+        var audioPlayed = false; // 오디오가 재생되었는지 여부를 나타내는 변수
+
+        window.addEventListener('scroll', function() {
+            var talkElement = document.getElementById('talk');
+            var scrollX = window.scrollX || window.pageXOffset;
+
+            if (scrollX >= 2000 && !audioPlayed) { // 스크롤 x값이 2000 이상이고 오디오가 재생되지 않은 경우
+                talkElement.classList.add('fade-in');
+                var audio = new Audio("./sounds/카톡.mp3");
+                audio.play();
+                audioPlayed = true; // 오디오가 재생되었음을 표시
+            }
+        });
+
+        var talkElement = document.getElementById('talk');
+        talkElement.addEventListener('click', function() {
+            talkElement.classList.remove('fade-in'); // fade-in 클래스 제거
+        });
+
+        var phoneIcon = document.getElementById('phoneicon');
+        var phone = document.getElementById('phone');
+
+        phoneIcon.addEventListener('click', function() {
+            phone.classList.toggle('show'); // show 클래스를 토글하여 나타내거나 숨김
+        });
+
+        var timerID = null;
+        var timerRunning = false;
+        var id,pause=0,position=0;
+
+        function ticker() {
+                var i,k,msg=" 럭키 마트에서 닭볶음탕 재료와 딸기타르트 재료를 구입하자! ";
+                k=(55/msg.length)+1;
+                for(i=0;i<=k;i++) msg+=" "+msg;
+                document.form2.ticker_tape.value=msg.substring(position,position+55);
+                if(position++==38) position=0;
+                id=setTimeout("ticker()",1000/10);
+        }
+
+        function action() {
+                if(!pause) {
+                        clearTimeout(id);
+                        pause=1; }
+                else {
+                        ticker();
+                        pause=0; }
+        }
+
+        function show1() {
+            document.getElementById("tomato2").style.display = "block";
+        }
+        function hide1() {
+            document.getElementById("tomato2").style.display = "none";
+        }
+
+        function show2() {
+            document.getElementById("strawberry2").style.display = "block";
+        }
+        function hide2() {
+            document.getElementById("strawberry2").style.display = "none";
+        }
+
+        function show3() {
+            document.getElementById("milk2").style.display = "block";
+        }
+        function hide3() {
+            document.getElementById("milk2").style.display = "none";
+        }
+
+        function show4() {
+            document.getElementById("chicken3").style.display = "block";
+        }
+        function hide4() {
+            document.getElementById("chicken3").style.display = "none";
+        }
+
+        function show5() {
+            document.getElementById("cereal2").style.display = "block";
+        }
+        function hide5() {
+            document.getElementById("cereal2").style.display = "none";
+        }
+
+        function show6() {
+            document.getElementById("cream2").style.display = "block";
+        }
+        function hide6() {
+            document.getElementById("cream2").style.display = "none";
+        }
+
+        function show7() {
+            document.getElementById("pie2").style.display = "block";
+        }
+        function hide7() {
+            document.getElementById("pie2").style.display = "none";
+        }
+
+        function show8() {
+            document.getElementById("gonion2").style.display = "block";
+        }
+        function hide8() {
+            document.getElementById("gonion2").style.display = "none";
+        }
+    </script>
+</body>
+</html>

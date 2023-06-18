@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>럭키 마트</title>
+    <script src="js/xscroll.js"></script>
+    <style> 
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        #logo {
+            position: fixed;
+            margin: 30px 0 0 50px;
+            display: inline-block;
+        }
+
+        #logo img {
+            width: 40px;
+        }
+
+        header ul {
+            position: fixed;
+            display: inline-block;
+            margin: 3% 0 0 78%;
+        }
+
+        header li {
+            display: inline-block;
+            list-style-type: none;
+            padding: 0 10px;
+        }
+
+        
+        header li a {
+            text-decoration: none;
+            color: black;
+        }
+
+        header li a:hover {
+            color: red;
+            cursor: pointer;
+        }
+
+        #newspaper {
+            position: fixed;
+            top: 150px;
+            left: 22%;
+            transition: top 0.5s ease-in-out;
+            background-color: #e4e4e4;
+            width: 1000px;
+            height: 700px;
+            z-index: 2;
+        }
+
+        #newspaper h1 {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 5rem;
+        }
+
+        #newspaper h2 {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 5px 30px;
+            font-size: 3rem;
+        }
+        
+        #newspaper h2:hover {
+            color: red;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        #newspaper h3 {
+            text-align: center;
+            color: grey;
+            margin-top: 60px;
+            font-size: 2rem;
+        }
+
+        .line {
+            width: 95%;
+            margin: 0 auto;
+            border: 5px solid black;
+        }
+
+        .drag{
+            position:relative;
+            cursor:hand;
+            z-index: 100;
+            top: 30px;
+            left: 100px;
+            display: block;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div id="logo"><a href="index.html"><img src="./img/logo.png" alt=""></a></div>
+        <ul>
+            <li><a href="shopping.html">장보기</a></li>
+            <li><a href="basket.html">장바구니</a></li>
+            <li><a href="game.html">하늘에서 음식이 내린다면</a></li>
+        </ul>
+    </header>
+
+        <img class="drag" src="./img/coupon.png" alt="">
+    
+    <div id="newspaper">
+        <h1>럭키 마트</h1>
+        <div class="line"></div>
+        <h2 id="pop1" style="font-size: 5rem;">파격 세일 소고기 80% 할인</h2>
+        <h2>봄 딸기 한팩 5,990원!</h2>
+        <h2>초코파이 2 + 1</h2>
+        <h2 style="font-size: 3.5rem;">상하목장 우유 1 + 1</h2>
+        <h2 style="font-size: 3.5rem;">비비고 만두 2 + 1</h2>
+        <h2 style="font-size: 2.5rem;">유진누 케이크 입점 소식!</h2>
+        <h3>🍀 오늘 럭키 데이! 파격 세일 진행 중 ~ 🍀</h3>
+    </div>
+    
+    <script>
+        var dragobject={
+            z: 0, x: 0, y: 0, offsetx : null, offsety : null, targetobj : null, dragapproved : 0,
+            initialize:function(){
+            document.onmousedown=this.drag
+            document.onmouseup=function(){this.dragapproved=0}
+            },
+            drag:function(e){
+            var evtobj=window.event? window.event : e
+            this.targetobj=window.event? event.srcElement : e.target
+            if (this.targetobj.className=="drag"){
+            this.dragapproved=1
+            if (isNaN(parseInt(this.targetobj.style.left))){this.targetobj.style.left=0}
+            if (isNaN(parseInt(this.targetobj.style.top))){this.targetobj.style.top=0}
+            this.offsetx=parseInt(this.targetobj.style.left)
+            this.offsety=parseInt(this.targetobj.style.top)
+            this.x=evtobj.clientX
+            this.y=evtobj.clientY
+            if (evtobj.preventDefault)
+            evtobj.preventDefault()
+            document.onmousemove=dragobject.moveit
+            }
+            },
+            moveit:function(e){
+            var evtobj=window.event? window.event : e
+            if (this.dragapproved==1){
+            this.targetobj.style.left=this.offsetx+evtobj.clientX-this.x+"px"
+            this.targetobj.style.top=this.offsety+evtobj.clientY-this.y+"px"
+            return false
+            }
+            }
+            }
+
+            dragobject.initialize()
+    </script>
+</body>
+</html>

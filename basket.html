@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var ie4 = false;
+        if (document.all) {
+            ie4 = true;
+        }
+        function setContent(name, value) {
+            var d;
+            if (ie4) {
+                d = document.all[name];
+            } else {
+                d = document.getElementById(name);
+            }
+            d.innerHTML = value;
+        }
+
+        function getContent(name) {
+            var d;
+            if (ie4) {
+                d = document.all[name];
+            } else {
+                d = document.getElementById(name);
+            }
+            return d.innerHTML;
+        }
+
+        function setColor(name, value) {
+            var d;
+            if (ie4) {
+                d = document.all[name];
+            } else {
+                d = document.getElementById(name);
+            }
+            d.style.color = value;
+        }
+
+        function getColor(name) {
+            var d;
+            if (ie4) {
+                d = document.all[name];
+            } else {
+                d = document.getElementById(name);
+            }
+            return d.style.color;
+        }
+
+        function animate(name, col) {
+            var value = getContent(name);
+            if (value.indexOf('<span') >= 0) { return; }
+            var length = 0;
+            var str = '';
+            var ch;
+            var token = '';
+            var htmltag = false;
+            for (i = 0; i < value.length; i++) {
+                ch = value.substring(i, i + 1);
+                if (i < value.length - 1) {
+                    nextch = value.substring(i + 1, i + 2);
+                } else { nextch = ' '; }
+                token += ch;
+                if (ch == '<' && '/aAbBpPhHiIoOuUlLtT'.indexOf(nextch) >= 0) { htmltag = true; }
+                if (ch == '>' && htmltag) { htmltag = false; }
+                if (!htmltag && ch.charCodeAt(0) > 30 && ch != ' ' && ch != '\n') {
+                    str += '<span id="' + name + '_' + length + '">' + token + '</span>';
+                    token = '';
+                    length++;
+                }
+            }
+            setContent(name, str);
+            command = 'animateloop(\'' + name + '\', ' + length + ', 0, 1, \'' + col + '\')';
+            setTimeout(command, 100);
+        }
+
+        function animateloop(name, length, ind, delta, col) {
+            var next = ind + delta;
+            if (next >= length) { delta = delta * -1; next = ind + delta; }
+            if (next < 0) { delta = delta * -1; next = ind + delta; }
+            setColor(name + '_' + ind, getColor(name + '_' + next));
+            setColor(name + '_' + next, col);
+            command = 'animateloop(\'' + name + '\', ' + length + ', ' + next + ', ' + delta + ', \'' + col + '\')';
+            setTimeout(command, 100);
+        }
+    </script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        #logo {
+            position: fixed;
+            margin: 30px 0 0 50px;
+            display: inline-block;
+        }
+
+        #logo img {
+            width: 40px;
+        }
+
+        header ul {
+            position: fixed;
+            display: inline-block;
+            margin: 3% 0 0 78%;
+        }
+
+        header li {
+            display: inline-block;
+            list-style-type: none;
+            padding: 0 10px;
+        }
+
+        
+        header li a {
+            text-decoration: none;
+            color: black;
+        }
+
+        header li a:hover {
+            color: red;
+            cursor: pointer;
+        }
+
+        #basketBox {
+            background-image: url(./img/basket.png);
+            background-size: cover;
+            background-repeat: no-repeat;
+            position: fixed;
+            display: inline-block;
+            top: 55%;
+            left: 19%;
+            width: 250px;
+            height: 180px;
+            padding: auto;
+            overflow: hidden;
+        }
+
+        #basketBox2 {
+            background-image: url(./img/basket.png);
+            background-size: cover;
+            background-repeat: no-repeat;
+            position: fixed;
+            display: inline-block;
+            top: 55%;
+            left: 44%;
+            width: 250px;
+            height: 180px;
+            padding: auto;
+            overflow: hidden;
+        }
+
+        #basketBox3 {
+            background-image: url(./img/basket.png);
+            background-size: cover;
+            background-repeat: no-repeat;
+            position: fixed;
+            display: inline-block;
+            top: 55%;
+            left: 69%;
+            width: 250px;
+            height: 180px;
+            padding: auto;
+            overflow: hidden;
+        }
+
+        #basketBoxIn {
+            position: fixed;
+            display: inline-block;
+            top: 55%;
+            left: 19%;
+            width: 300px;
+            height: 180px;
+            padding: auto;
+            overflow: hidden;
+        }
+
+        #basketBoxIn2 {
+            position: fixed;
+            display: inline-block;
+            top: 55%;
+            left: 44%;
+            width: 300px;
+            height: 180px;
+            padding: auto;
+            overflow: hidden;
+        }
+
+        #basketBoxIn3 {
+            position: fixed;
+            display: inline-block;
+            top: 55%;
+            left: 69%;
+            width: 300px;
+            height: 180px;
+            padding: auto;
+            overflow: hidden;
+        }
+
+        .slider {
+            top: 230px;
+            height: 250px;
+            margin: auto;
+            position: relative;
+            width: 90%;
+            place-items: center;
+            overflow: hidden;
+        }
+
+        .slide-track {
+            display: flex;
+            width: calc(250px * 18);
+            animation: scroll 40s linear infinite;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(calc(-250px * 9));
+            }
+        }
+
+        .slide {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            perspective: 100px;
+        }
+
+        .slider::before {
+            left: 0;
+            top: 0;
+        }
+
+        .slider::after {
+            right: 0;
+            top: 0;
+            transform: rotateZ(180deg);
+        }
+
+        .slider img:hover {
+            transform: translateZ(20px);
+        }
+
+        #animate {
+            position: fixed;
+            top: 150px;
+            left: 45%;
+        }
+
+        #menu2 {
+            position: fixed;
+            top: 88%;
+            left: 4%;
+        }
+
+        #menu2 img {
+            width: 40px;
+            padding: 0 10px;
+        }
+
+        #phoneicon:hover {
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        #newsicon:hover {
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        #phone {
+            position: fixed;
+            right: -500px;
+            top: 10%;
+            transition: right 0.5s ease-in-out;
+        }
+
+        #phone.show {
+            right: 5%;
+            transition: right 0.5s ease-in-out;
+        }
+
+        #phone img {
+            width: 300px;
+        }
+        #checklist {
+            position: absolute;
+            top: 180px;
+            line-height: 1.5;
+            left: 25%;
+            list-style-type: none;
+            text-align: left;
+        }
+
+        #phone h2 {
+            position: absolute;
+            top: 130px;
+            left: 25%;
+        }
+
+        #newspaper {
+            position: fixed;
+            top: 100px;
+            left: 22%;
+            background-color: #e4e4e4;
+            width: 1000px;
+            height: 700px;
+        }   
+    </style>
+</head>
+<body>
+    <header>
+        <div id="logo"><a href="index.html"><img src="./img/logo.png" alt=""></a></div>
+        <ul>
+            <li><a href="shopping.html">장보기</a></li>
+            <li><a href="basket.html" style="color: red;">장바구니</a></li>
+            <li><a href="game.html">하늘에서 음식이 내린다면</a></li>
+        </ul>
+    </header>
+    <div id="animate">드래그해서 바구니에 담아보세요!</div>
+    <div class="slider">
+        <div class="slide-track">
+            <div class="slide">
+                <img id="drag1" src="./img/tomato.png" draggable="true" ondragstart="drag(event)" width="100px">
+            </div>
+            <div class="slide">
+                <img id="drag2" src="./img/cereal.png" draggable="true" ondragstart="drag(event)" width="180px">
+            </div>
+            <div class="slide">
+                <img id="drag3" src="./img/cream2.png" draggable="true" ondragstart="drag(event)" width="120px">
+            </div>
+            <div class="slide">
+                <img id="drag4" src="./img/pork2.png" draggable="true" ondragstart="drag(event)" width="200px">
+            </div>
+            <div class="slide">
+                <img id="drag5" src="./img/banana2.png" draggable="true" ondragstart="drag(event)" width="150px">
+            </div>
+            <div class="slide">
+                <img id="drag6" src="./img/bean.png" draggable="true" ondragstart="drag(event)" width="180px">
+            </div>
+            <div class="slide">
+                <img id="drag7" src="./img/chocopie.png" draggable="true" ondragstart="drag(event)" width="180px">
+            </div>
+            <div class="slide">
+                <img id="drag8" src="./img/baileys.png" draggable="true" ondragstart="drag(event)" width="100px">
+            </div>
+            <div class="slide">
+                <img id="drag9" src="./img/onion.png" draggable="true" ondragstart="drag(event)" width="160px">
+            </div>
+            <div class="slide">
+                <img id="drag10" src="./img/beef.png" draggable="true" ondragstart="drag(event)" width="200px">
+            </div>
+            <div class="slide">
+                <img id="drag11" src="./img/chicken.png" draggable="true" ondragstart="drag(event)" width="170px">
+            </div>
+
+            <div class="slide">
+                <img id="drag1" src="./img/tomato.png" draggable="true" ondragstart="drag(event)" width="100px">
+            </div>
+            <div class="slide">
+                <img id="drag2" src="./img/cereal.png" draggable="true" ondragstart="drag(event)" width="180px">
+            </div>
+            <div class="slide">
+                <img id="drag3" src="./img/cream2.png" draggable="true" ondragstart="drag(event)" width="120px">
+            </div>
+            <div class="slide">
+                <img id="drag4" src="./img/pork2.png" draggable="true" ondragstart="drag(event)" width="200px">
+            </div>
+            <div class="slide">
+                <img id="drag5" src="./img/banana2.png" draggable="true" ondragstart="drag(event)" width="150px">
+            </div>
+            <div class="slide">
+                <img id="drag6" src="./img/bean.png" draggable="true" ondragstart="drag(event)" width="180px">
+            </div>
+            <div class="slide">
+                <img id="drag7" src="./img/chocopie.png" draggable="true" ondragstart="drag(event)" width="180px">
+            </div>
+            <div class="slide">
+                <img id="drag8" src="./img/baileys.png" draggable="true" ondragstart="drag(event)" width="100px">
+            </div>
+            <div class="slide">
+                <img id="drag9" src="./img/onion.png" draggable="true" ondragstart="drag(event)" width="160px">
+            </div>
+            <div class="slide">
+                <img id="drag10" src="./img/beef.png" draggable="true" ondragstart="drag(event)" width="200px">
+            </div>
+            <div class="slide">
+                <img id="drag11" src="./img/chicken.png" draggable="true" ondragstart="drag(event)" width="170px">
+            </div>
+        </div>
+    </div>
+
+    <div id="basketBox"></div>
+    <div id="basketBoxIn" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <div id="basketBox2"></div>
+    <div id="basketBoxIn2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <div id="basketBox3"></div>
+    <div id="basketBoxIn3" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+    <div id="menu2">
+        <img id="phoneicon2" src="./img/phoneicon2.png" alt="">
+        <img id="newsicon2" src="./img/newsicon2.png" alt="">
+    </div>
+    
+    <div id="menu2">
+        <img id="phoneicon" src="./img/phoneicon.png" alt="">
+        <img id="newsicon" src="./img/newsicon.png" alt="">
+    </div>
+    
+
+    <div id="phone">
+        <img src="img/phone.png" alt="">
+            <h2>장 볼 것</h2>
+            <ul id="checklist">
+                <li><input type="checkbox" name="" id=""> 닭</li>
+                <li><input type="checkbox" name="" id=""> 대파</li>
+                <li><input type="checkbox" name="" id=""> 딸기</li>
+                <li><input type="checkbox" name="" id=""> 생크림</li>
+                <li><input type="checkbox" name="" id=""> 토마토</li>
+                <li><input type="checkbox" name="" id=""> 초코파이</li>
+            </ul>
+    </div>
+
+    <script>
+        function allowDrop(ev) {
+        ev.preventDefault();
+        }
+
+        function drag(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+        }
+
+        function drop(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        ev.target.appendChild(document.getElementById(data));
+        }
+
+        animate('animate', 'red'); // 색상지정은 함수 호출부분에서 합니다
+        
+        var phoneIcon = document.getElementById('phoneicon');
+        var phone = document.getElementById('phone');
+
+        phoneIcon.addEventListener('click', function() {
+            phone.classList.toggle('show'); // show 클래스를 토글하여 나타내거나 숨김
+        });
+    </script>
+</body>
+</html>

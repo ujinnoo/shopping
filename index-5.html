@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>럭키 마트</title>
+    <link rel="stylesheet" href="./css/index.css"> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js" integrity="sha512-VEBjfxWUOyzl0bAwh4gdLEaQyDYPvLrZql3pw1ifgb6fhEvZl9iDDehwHZ+dsMzA0Jfww8Xt7COSZuJ/slxc4Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <header>
+        <div id="logo"><a href="index.html"><img src="./img/logo.png" alt=""></a></div>
+    </header>
+    <div id="text">
+        <h1><a href="index.html"><오늘의 심부름></a></h1>
+        <h1><a href="index-2.html">엄마가 닭볶음탕 만들 저녁 재료를 사와달라고 부탁했다.</a></h1>
+        <h1><a href="index-3.html">언니는 후식으로 딸기 타르트를 먹고싶다고 했는데...</a></h1>
+        <h1><a href="index-4.html">겸사겸사 내가 먹고싶은 간식도 사고</a></h1>
+        <h1 class="blink"><a href="#">오늘 필요한 재료들을 사러 가볼까?</a></h1>
+        <a id="button" href="shopping.html">
+            <span>장 보러가기</span>
+        </a>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var audio = new Audio("./sounds/click.mp3");
+            audio.play();
+        });
+        
+        function magneticButton(element) {
+            const children = element.children[0]
+
+            element.addEventListener('mousemove', e => {
+                const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = element
+                const left = e.pageX - offsetLeft
+                const top = e.pageY - offsetTop
+                const centerX = left - offsetWidth / 2
+                const centerY = top - offsetHeight / 2
+                const d = Math.sqrt(centerX**2 + centerY**2)
+
+                gsap.to(element, 0.5, {
+                x: centerX / 1.5,
+                y: centerY / 1.5,
+                ease: Elastic.easeOut
+                })
+
+                children.style.transform = `
+                translate3d(${centerX / 4}px, ${centerY / 4}px, 0)
+                rotate3d(${-centerY / 100}, ${centerX / 100}, 0, ${d / 10}deg)
+                `
+            })
+
+            element.addEventListener('mouseleave', () => {
+                gsap.to(element, 1.2, {
+                x: 0,
+                y: 0,
+                ease: Elastic.easeOut
+                })
+                children.style.transform = ''
+            })
+        }
+
+        const button = document.querySelector('#button');
+        magneticButton(button);
+    </script>
+</body>
+</html>

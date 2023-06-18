@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>하늘에서 음식이 내린다면</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            overflow-y: hidden;
+        }
+
+        #logo {
+            position: fixed;
+            margin: 30px 0 0 50px;
+            display: inline-block;
+        }
+
+        #logo img {
+            width: 40px;
+        }
+
+        header ul {
+            position: fixed;
+            display: inline-block;
+            margin: 3% 0 0 78%;
+        }
+
+        header li {
+            display: inline-block;
+            list-style-type: none;
+            padding: 0 10px;
+        }
+
+        
+        header li a {
+            text-decoration: none;
+            color: black;
+        }
+
+        header li a:hover {
+            color: red;
+            cursor: pointer;
+        }
+
+        #cart {
+            position: absolute;
+            top: 65%;
+            left: 47%;
+        }
+
+        #cart img {
+            position: absolute;
+            width: 150px;
+        }
+
+        .falling-image {
+            position: absolute;
+            width: 100px;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div id="logo"><a href="index.html"><img src="./img/logo.png" alt=""></a></div>
+        <ul>
+            <li><a href="shopping.html">장보기</a></li>
+            <li><a href="basket.html">장바구니</a></li>
+            <li><a href="game.html" style="color: red;">하늘에서 음식이 내린다면</a></li>
+        </ul>
+    </header>
+    <div id="animationContainer"></div>
+    <div id="cart">
+        <img src="img/cart.png">
+    </div>
+    <div style="position: fixed; left: 44%; top: 90%;">좌우 방향키(←, →)로 카트 좌우로 이동 가능</div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var cart = document.querySelector("#cart");
+            var cartImg = cart.querySelector("img");
+            var stepSize = 100; // 좌우로 이동하는 픽셀 단위 크기
+
+            document.addEventListener("keydown", function(e) {
+                var currentLeft = parseInt(cartImg.style.left) || 0;
+
+                if (e.key === "ArrowLeft") {
+                    cartImg.style.left = (currentLeft - stepSize) + "px";
+                } else if (e.key === "ArrowRight") {
+                    cartImg.style.left = (currentLeft + stepSize) + "px";
+                }
+            });
+
+            var container = document.getElementById("animationContainer");
+            var containerWidth = window.innerWidth;
+            var containerHeight = window.innerHeight;
+            var images = ["./img/tomato.png", "./img/banana.png", "./img/milk2.png", "./img/melona.png", "./img/ramen.png", "./img/malibu.png", "./img/beef.png", "./img/bagle.png", "./img/greenonion2.png", "./img/ramen3.png", "./img/cream2.png", "./img/chicken2.png", "./img/chocopie.png", "./img/cereal.png", "./img/pork2.png", "./img/strawberry.png"]; // 이미지 파일 경로 배열
+            
+            function createFallingImage() {
+                var image = new Image();
+                var randomLeft = Math.floor(Math.random() * (containerWidth - 100 + 1));
+                var duration = 5000; // 5초
+                var fadeOutDuration = 12000; // fade out 효과 지속 시간
+
+                image.classList.add("falling-image");
+                image.src = images[Math.floor(Math.random() * images.length)];
+                image.style.left = randomLeft + "px";
+                image.style.top = "-100px";
+                image.style.transition = "top " + duration + "ms, opacity " + fadeOutDuration + "ms";
+
+                container.appendChild(image);
+
+                setTimeout(function() {
+                    image.style.top = containerHeight + "px";
+                    image.style.opacity = 0;
+                }, 10);
+
+                setTimeout(function() {
+                    container.removeChild(image);
+                }, duration + fadeOutDuration);
+
+                setTimeout(createFallingImage, 500); // 0.5초 후에 이미지 생성
+            }
+
+            createFallingImage();
+        });
+    </script>
+</body>
+</html>
