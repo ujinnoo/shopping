@@ -426,7 +426,7 @@
             var talkElement = document.getElementById('talk');
             var scrollX = window.scrollX || window.pageXOffset;
 
-            if (scrollX >= 1800 && !audioPlayed) { // 스크롤 x값이 2000 이상이고 오디오가 재생되지 않은 경우
+            if (scrollX >= 1500 && !audioPlayed) { // 스크롤 x값이 2000 이상이고 오디오가 재생되지 않은 경우
                 talkElement.classList.add('fade-in');
                 var audio = new Audio("./sounds/카톡.mp3");
                 audio.play();
